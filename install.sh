@@ -18,7 +18,8 @@ COINRPCPORT=121528
 COINDAEMON=boxyd
 COINCORE=.boxy
 COINCONFIG=boxy.conf
-COINCONFIGSRC="https://raw.githubusercontent.com/boyroywax/addnodes/master/boxy.conf"
+COINCONFIGSRC="https://bootstrap.boxyco.in/boxy.conf"
+BOOTSTRAP="https://bootstrap.boxyco.in/bootstrap.dat"
 SWAPSIZE=3000
 UBUNTUVERSION=16.04
 
@@ -138,9 +139,9 @@ startWallet() {
     sudo rm fee_estimates.dat > /dev/null 2>&1
     sudo rm mnpayments.dat > /dev/null 2>&1
     sudo rm banlist.dat > /dev/null 2>&1
-  # sudo touch ~/$COINCORE/$COINCONFIG > /dev/null 2>&1
     sudo mv $COINCONFIG backup_$COINCONFIG > /dev/null 2>&1
     wget $COINCONFIGSRC > /dev/null 2>&1
+    wget $BOOTSTRAP > /dev/null 2>&1
     echo -e "${NONE}${GREEN}* Add your RPC Username and Password and save. Press "control x" after "y" and "enter". Wait a few seconds, now the editor will open. ${NONE}";
     sleep 5 
     nano $COINCONFIG
@@ -154,10 +155,7 @@ syncWallet() {
     echo
     echo "[9/${MAX}] Waiting for wallet to sync.";
     sleep 3
-    echo -e "${GREEN}* Blockchain Synced${NONE}";
-    echo -e "${GREEN}* Masternode List Synced${NONE}";
-    echo -e "${GREEN}* Winners List Synced${NONE}";
-    echo -e "${GREEN}* Done reindexing wallet${NONE}";
+    echo -e "${GREEN}* Displaying command "boxyd getinfo"${NONE}";
     $COINDAEMON getinfo
 }
 
